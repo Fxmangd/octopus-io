@@ -12,7 +12,6 @@
     
     <!-- 图标与动效库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
@@ -68,13 +67,12 @@
         .hero { text-align: center; padding: 100px 0 60px; }
         .hero h1 { font-size: 3rem; line-height: 1.25; margin-bottom: 25px; letter-spacing: -0.02em; }
         
-        /* 标题 Logo 图片样式 */
         .title-icon {
-            height: 1.5em; /* 使得图标随字体大小进行缩放 */
+            height: 1.5em; 
             width: auto;
             vertical-align: middle;
             margin-right: 5px;
-            margin-bottom: 8px; /* 微调以保证视觉重心对齐文本中心 */
+            margin-bottom: 8px; 
         }
         
         .cvpr-badge {
@@ -131,25 +129,83 @@
         .img-no-border { box-shadow: none; border: none; }
         .caption { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; }
 
-        @media(max-width: 768px) {
-            .content-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2.2rem; }
-            .glass-card { padding: 25px; }
-        }
-
         /* ================= 标题 ================= */
         .section-title {
             font-size: 2.2rem; text-align: center; margin-bottom: 50px;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .section-title-left { text-align: left; margin-bottom: 30px; }
 
-        /* ================= 轮播图定制 ================= */
-        .swiper-container { border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-soft); border: 1px solid var(--border-color); background: #ffffff; }
-        .swiper-slide { padding: 40px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;}
-        .swiper-pagination-bullet { background: var(--text-muted); }
-        .swiper-pagination-bullet-active { background: var(--primary-color); }
+        /* ================= 选项卡 Tabs (Example Analysis) ================= */
+        .tabs-wrapper {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap; 
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-alt);
+        }
+        .tab-button {
+            flex: 1; 
+            min-width: 150px;
+            background: transparent;
+            border: none;
+            padding: 18px 20px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+            text-align: center;
+        }
+        .tab-button:hover {
+            background: rgba(224, 122, 95, 0.05);
+            color: var(--text-main);
+        }
+        .tab-button.active {
+            background: #ffffff;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+        .tab-content {
+            display: none;
+            padding: 50px 40px;
+            text-align: center; /* 确保内部文字居中 */
+            animation: fadeIn 0.4s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-content h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+        .tab-content p {
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .tab-content img {
+            max-height: 500px;
+            width: auto;
+            margin: 0 auto; /* 确保图片居中 */
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* ================= 代码框 ================= */
         .terminal { background: #fafafa; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; margin-top: 20px; }
@@ -167,6 +223,13 @@
             font-style: italic;
             color: var(--text-muted);
         }
+
+        @media(max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.2rem; }
+            .glass-card { padding: 25px; }
+            .tab-button { min-width: 50%; border-bottom: 1px solid var(--border-color); }
+        }
     </style>
 </head>
 <body>
@@ -176,9 +239,8 @@
         <div data-aos="fade-down" data-aos-duration="1000">
             <div class="cvpr-badge"><i class="fas fa-award"></i> Accepted to CVPR 2026</div>
             
-            <!-- 替换了此处的大标题文字，加入了用户指定的章鱼图片 -->
             <h1>
-                <img src="static/images/icon.png" alt="Octopus Logo" class="title-icon">
+                <img src="static/images/octopus_logo.png" alt="Octopus Logo" class="title-icon">
                 Octopus: <span class="highlight-text">History-Free Gradient Orthogonalization</span><br>
                 for Continual Learning in MLLMs
             </h1>
@@ -232,7 +294,6 @@
                 <!-- 右列：雷达图 -->
                 <div>
                     <figure style="margin: 0;">
-                        <!-- 替换路径: 图表1(雷达图) -->
                         <img src="static/images/fig1_radar.png" alt="Performance Radar Chart on UCIT" class="img-fluid" style="background:#fff;">
                         <p class="caption">Figure 1. Performance comparison on the UCIT dataset. Octopus establishes a new State-of-the-Art (SOTA) without needing historical data replay.</p>
                     </figure>
@@ -249,7 +310,6 @@
             <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 1.1rem;">
                 The Octopus pipeline is thoughtfully designed to mitigate gradient-level interference across arbitrary task sequences, achieving parameter decoupling purely through optimization geometry.
             </p>
-            <!-- 替换路径: 你的 图表2(右) 模型结构图 -->
             <img src="static/images/fig2_right.png" class="img-fluid" alt="Octopus Pipeline Diagram">
             <p class="caption mt-3">Figure 2. The pipeline of the proposed Octopus framework.</p>
         </div>
@@ -270,12 +330,10 @@
                 
                 <div class="multi-img-grid mt-4">
                     <div>
-                        <!-- 替换路径: 图表3 柱状图 -->
                         <img src="static/images/fig3.png" class="img-fluid" alt="HiFGO validity analysis">
                         <p class="caption">Figure 3. Validity of the HiFGO constraint. Utilizing GPWC successfully restores prior task performance compared to standard sequential fine-tuning.</p>
                     </div>
                     <div>
-                        <!-- 替换路径: 图表4 Hessian 二次型对比 -->
                         <img src="static/images/fig4.png" class="img-fluid" alt="Hessian Quadratic Form">
                         <p class="caption">Figure 4. Comparison of the quadratic form of parameter increment. GPWC guides model updates precisely into low-curvature flat regions of the old tasks.</p>
                     </div>
@@ -292,16 +350,7 @@
             <!-- 左侧：文字说明 -->
             <div style="display: flex; flex-direction: column; gap: 20px;">
                 <div class="glass-card" style="border-left: 4px solid var(--primary-color);">
-                    <h3 style="color: var(--primary-**Considering the Implementation Steps**
-
-I'm now carefully implementing the HTML and CSS changes. I've finalized the `img` tag and its placeholder source, ready to be linked to the image the user provides. The CSS is also ready, with fine-tuned adjustments for vertical alignment and spacing. I'm focusing on ensuring it integrates seamlessly within the `h1` element. The next step involves assembling the complete, ready-to-use HTML snippet for the Hero section, and I am almost finished!
-
-
-
-
-[gpt-thinkdone]
-
-color); margin-top: 0;"><i class="fas fa-bolt"></i> Stage 1: Unconstrained Adaptation</h3>
+                    <h3 style="color: var(--primary-color); margin-top: 0;"><i class="fas fa-bolt"></i> Stage 1: Unconstrained Adaptation</h3>
                     <p style="margin-bottom: 0;">
                         Inspired by simulated annealing, the model first freely finetunes on the new task data. This phase temporarily ignores stability to maximize <b>plasticity</b>, allowing the model to quickly absorb new feature representations and plunge into the local minimum optimal for the new distributions.
                     </p>
@@ -315,7 +364,6 @@ color); margin-top: 0;"><i class="fas fa-bolt"></i> Stage 1: Unconstrained Adapt
             </div>
             <!-- 右侧：伪代码 -->
             <div>
-                <!-- 替换路径: 你的 图表5(算法流程图) -->
                 <img src="static/images/fig5_algorithm.png" class="img-fluid" alt="Octopus Algorithm Pseudo-code" style="box-shadow: var(--shadow-soft);">
                 <p class="caption">Algorithm 1. The formalized execution flow of Two-Stage Finetuning.</p>
             </div>
@@ -333,7 +381,6 @@ color); margin-top: 0;"><i class="fas fa-bolt"></i> Stage 1: Unconstrained Adapt
                 <p style="color: var(--text-muted); font-size: 0.95rem;">
                     Evaluations on the demanding multi-task UCIT benchmark. Octopus significantly outperforms recent baselines (such as O-LoRA and HiDe-LLaVA) on Average (Avg) and Last performance metrics, achieving SOTA results without requiring the storage or rehearsal of past data.
                 </p>
-                <!-- 替换路径: 主表格 -->
                 <img src="static/images/fig6_table.png" class="img-fluid mt-3" alt="Main Benchmark Table">
             </div>
 
@@ -343,13 +390,11 @@ color); margin-top: 0;"><i class="fas fa-bolt"></i> Stage 1: Unconstrained Adapt
                 <p style="color: var(--text-muted); font-size: 0.95rem;">
                     A critical indicator of continual learning capability is Backward Transfer. Instead of suffering from negative transfer, Octopus effectively extracts generalized representations from new tasks that are highly compatible with historical knowledge, yielding an exceptional positive backward transfer (BWT = +0.41).
                 </p>
-                <!-- 替换路径: 反向迁移柱状图 -->
                 <img src="static/images/fig8_bwt.png" class="img-fluid mt-3" alt="Backward Transfer Chart" style="max-height: 400px; object-fit: contain; margin: 0 auto;">
             </div>
 
             <!-- 分两列占据 3：鲁棒性 vs 效率 -->
             <div class="content-grid" style="margin-bottom: 0;">
-                <!-- 左列：鲁棒性 -->
                 <div class="glass-card">
                     <h3 style="margin-top: 0; font-size: 1.25rem;">Robustness and Hyperparameter Sensitivity</h3>
                     <p style="font-size: 0.9rem; color: var(--text-muted);">
@@ -358,7 +403,6 @@ color); margin-top: 0;"><i class="fas fa-bolt"></i> Stage 1: Unconstrained Adapt
                     <img src="static/images/fig9_sensitivity.png" class="img-fluid mt-3" alt="Hyperparameter Sensitivity">
                 </div>
 
-                <!-- 右列：推理效率 -->
                 <div class="glass-card">
                     <h3 style="margin-top: 0; font-size: 1.25rem;">Inference Efficiency</h3>
                     <p style="font-size: 0.9rem; color: var(--text-muted);">
@@ -370,39 +414,46 @@ color); margin-top: 0;"><i class="fas fa-bolt"></i> Stage 1: Unconstrained Adapt
         </div>
     </section>
 
-    <!-- ================= Example Analysis ================= -->
+    <!-- ================= Example Analysis (Tabs Layout) ================= -->
     <section class="section container" data-aos="fade-up">
         <h2 class="section-title">Example Analysis</h2>
         
-        <div class="swiper swiper-container">
-            <div class="swiper-wrapper">
-                <!-- Slide 1: Image Captioning -->
-                <div class="swiper-slide">
-                    <h3 style="margin-bottom: 10px; font-size: 1.2rem;">Image Captioning: VizWiz Dataset</h3>
-                    <p style="margin-top: 0; margin-bottom: 25px; font-size: 0.9rem; color: var(--text-muted);">Qualitative comparison demonstrating that baseline methods hallucinate, whereas Octopus retains accurate visual reasoning semantics.</p>
-                    <img src="static/images/example_vizwiz.png" class="img-fluid img-no-border" style="max-height: 450px; width:auto; margin:0 auto;" alt="VizWiz Example">
-                </div>
-                <!-- Slide 2: VQA (Task 1) -->
-                <div class="swiper-slide">
-                    <h3 style="margin-bottom: 10px; font-size: 1.2rem;">Visual Question Answering: ScienceQA</h3>
-                    <p style="margin-top: 0; margin-bottom: 25px; font-size: 0.9rem; color: var(--text-muted);">Despite long sequence learning, Octopus successfully recalls fundamental scientific knowledge to answer correctly.</p>
-                    <img src="static/images/example_scienceqa.png" class="img-fluid img-no-border" style="max-height: 450px; width:auto; margin:0 auto;" alt="ScienceQA Example">
-                </div>
-                <!-- Slide 3: VQA (Task 2) -->
-                <div class="swiper-slide">
-                    <h3 style="margin-bottom: 10px; font-size: 1.2rem;">Visual Question Answering: IconQA</h3>
-                    <p style="margin-top: 0; margin-bottom: 25px; font-size: 0.9rem; color: var(--text-muted);">The model perfectly preserves its capability to comprehend abstract and symbolic visual elements without interference.</p>
-                    <img src="static/images/example_iconqa.png" class="img-fluid img-no-border" style="max-height: 450px; width:auto; margin:0 auto;" alt="IconQA Example">
-                </div>
-                <!-- Slide 4: VQA (Task 3) -->
-                <div class="swiper-slide">
-                    <h3 style="margin-bottom: 10px; font-size: 1.2rem;">Visual Question Answering: CLEVR-Math</h3>
-                    <p style="margin-top: 0; margin-bottom: 25px; font-size: 0.9rem; color: var(--text-muted);">Octopus rigorously maintains discrete numerical reasoning abilities across prolonged sequential finetuning.</p>
-                    <img src="static/images/example_clevr.png" class="img-fluid img-no-border" style="max-height: 450px; width:auto; margin:0 auto;" alt="CLEVR-Math Example">
-                </div>
+        <div class="tabs-wrapper">
+            <!-- Tab Buttons -->
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="openExample(event, 'VizWiz')">VizWiz (Captioning)</button>
+                <button class="tab-button" onclick="openExample(event, 'ScienceQA')">ScienceQA (VQA)</button>
+                <button class="tab-button" onclick="openExample(event, 'IconQA')">IconQA (VQA)</button>
+                <button class="tab-button" onclick="openExample(event, 'CLEVR')">CLEVR-Math (VQA)</button>
             </div>
-            <!-- Pagination Dots -->
-            <div class="swiper-pagination"></div>
+
+            <!-- Tab Content 1: VizWiz -->
+            <div id="VizWiz" class="tab-content active">
+                <h3>Image Captioning: VizWiz Dataset</h3>
+                <p>Qualitative comparison demonstrating that baseline methods hallucinate, whereas Octopus retains accurate visual reasoning semantics.</p>
+                <img src="static/images/example_vizwiz.png" class="img-fluid img-no-border" alt="VizWiz Example">
+            </div>
+
+            <!-- Tab Content 2: ScienceQA -->
+            <div id="ScienceQA" class="tab-content">
+                <h3>Visual Question Answering: ScienceQA</h3>
+                <p>Despite long sequence learning, Octopus successfully recalls fundamental scientific knowledge to answer correctly.</p>
+                <img src="static/images/example_scienceqa.png" class="img-fluid img-no-border" alt="ScienceQA Example">
+            </div>
+
+            <!-- Tab Content 3: IconQA -->
+            <div id="IconQA" class="tab-content">
+                <h3>Visual Question Answering: IconQA</h3>
+                <p>The model perfectly preserves its capability to comprehend abstract and symbolic visual elements without interference.</p>
+                <img src="static/images/example_iconqa.png" class="img-fluid img-no-border" alt="IconQA Example">
+            </div>
+
+            <!-- Tab Content 4: CLEVR-Math -->
+            <div id="CLEVR" class="tab-content">
+                <h3>Visual Question Answering: CLEVR-Math</h3>
+                <p>Octopus rigorously maintains discrete numerical reasoning abilities across prolonged sequential finetuning.</p>
+                <img src="static/images/example_clevr.png" class="img-fluid img-no-border" alt="CLEVR-Math Example">
+            </div>
         </div>
     </section>
 
@@ -432,32 +483,35 @@ color); margin-top: 0;"><i class="fas fa-bolt"></i> Stage 1: Unconstrained Adapt
     </section>
 
     <!-- ================= SCRIPTS ================= -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize AOS animations
+        // 初始化 AOS 滚动动画
         AOS.init({
             once: true,
             offset: 60,
             duration: 800,
         });
 
-        // Initialize Swiper Carousel
-        const swiper = new Swiper('.swiper-container', {
-            effect: 'slide',
-            loop: true,
-            autoplay: {
-                delay: 5000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            autoHeight: true
-        });
+        // 选项卡 (Tabs) 切换逻辑
+        function openExample(evt, exampleName) {
+            // 隐藏所有的 tab 内容
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            // 移除所有按钮的 active 状态
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            // 显示当前点击的内容，并为其按钮赋予 active 状态
+            document.getElementById(exampleName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
 
-        // Copy BibTeX Functionality
+        // 复制 BibTeX 逻辑
         function copyBib() {
             const content = document.getElementById("bibtex-content").innerText;
             navigator.clipboard.writeText(content).then(() => {
