@@ -18,16 +18,7 @@
     <style>
         /* ================= 全局变量与核心色彩 ================= */
         :root {
-            --bg**Constructing HTML Elements**
-
-I'm presently building the HTML structure, incorporating the updated layout requirements for the "Abstract," "Two-Stage Finetuning," and "Experimental Results" sections. I'm focusing on CSS classes to ensure consistent styling and responsiveness, while generating the placeholders for the image and text blocks, anticipating minimal adjustments once the final content is available.
-
-
-
-
-[gpt-thinkdone]
-
--color: #ffffff;             
+            --bg-color: #ffffff;             
             --bg-alt: #fcfcfc;              
             --primary-color: #e07a5f;       
             --primary-light: #f4a261;       
@@ -76,6 +67,15 @@ I'm presently building the HTML structure, incorporating the updated layout requ
         /* ================= Hero 区域 ================= */
         .hero { text-align: center; padding: 100px 0 60px; }
         .hero h1 { font-size: 3rem; line-height: 1.25; margin-bottom: 25px; letter-spacing: -0.02em; }
+        
+        /* 标题 Logo 图片样式 */
+        .title-icon {
+            height: 1.5em; /* 使得图标随字体大小进行缩放 */
+            width: auto;
+            vertical-align: middle;
+            margin-right: 5px;
+            margin-bottom: 8px; /* 微调以保证视觉重心对齐文本中心 */
+        }
         
         .cvpr-badge {
             display: inline-block;
@@ -175,8 +175,11 @@ I'm presently building the HTML structure, incorporating the updated layout requ
     <section class="hero container">
         <div data-aos="fade-down" data-aos-duration="1000">
             <div class="cvpr-badge"><i class="fas fa-award"></i> Accepted to CVPR 2026</div>
+            
+            <!-- 替换了此处的大标题文字，加入了用户指定的章鱼图片 -->
             <h1>
-                🦑 Octopus: <span class="highlight-text">History-Free Gradient Orthogonalization</span><br>
+                <img src="static/images/octopus_logo.png" alt="Octopus Logo" class="title-icon">
+                Octopus: <span class="highlight-text">History-Free Gradient Orthogonalization</span><br>
                 for Continual Learning in MLLMs
             </h1>
             
@@ -289,7 +292,16 @@ I'm presently building the HTML structure, incorporating the updated layout requ
             <!-- 左侧：文字说明 -->
             <div style="display: flex; flex-direction: column; gap: 20px;">
                 <div class="glass-card" style="border-left: 4px solid var(--primary-color);">
-                    <h3 style="color: var(--primary-color); margin-top: 0;"><i class="fas fa-bolt"></i> Stage 1: Unconstrained Adaptation</h3>
+                    <h3 style="color: var(--primary-**Considering the Implementation Steps**
+
+I'm now carefully implementing the HTML and CSS changes. I've finalized the `img` tag and its placeholder source, ready to be linked to the image the user provides. The CSS is also ready, with fine-tuned adjustments for vertical alignment and spacing. I'm focusing on ensuring it integrates seamlessly within the `h1` element. The next step involves assembling the complete, ready-to-use HTML snippet for the Hero section, and I am almost finished!
+
+
+
+
+[gpt-thinkdone]
+
+color); margin-top: 0;"><i class="fas fa-bolt"></i> Stage 1: Unconstrained Adaptation</h3>
                     <p style="margin-bottom: 0;">
                         Inspired by simulated annealing, the model first freely finetunes on the new task data. This phase temporarily ignores stability to maximize <b>plasticity</b>, allowing the model to quickly absorb new feature representations and plunge into the local minimum optimal for the new distributions.
                     </p>
