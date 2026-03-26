@@ -1,395 +1,413 @@
-**Beginning Structure Creation**
-
-I'm now deep in the HTML creation phase. My main focus is on the hero section's visual elements, namely, figuring out the column layouts for the radar chart and concept illustration. Furthermore, I've got Bulma's Hero component styled to hold the paper details, and I'm ensuring everything scales well on smaller screens. I'm also preparing for the shaded abstract section with a bulleted list for key contributions.
-
-
-
-
-[gpt-thinkdone]
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="description"
-        content="Octopus: History-Free Gradient Orthogonalization for Continual Learning in Multimodal Large Language Models">
-  <meta name="keywords" content="Continual Learning, MLLM, Octopus, History-Free, CVPR">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Octopus: History-Free Gradient Orthogonalization</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Octopus: Continual Learning in MLLMs</title>
 
-  <!-- Modern Typography (Inter) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Bulma & Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <!-- 现代高级字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- 图标库 & Swiper轮播图 & AOS滚动动效库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-  <!-- MathJax for Math Rendering -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* ================= 全局变量与核心重置 ================= */
+        :root {
+            --bg-color: #0b1121; /* 深邃藏青色底色 */
+            --card-bg: rgba(18, 27, 47, 0.6);
+            --gradient-1: #2dd4bf; /* 绿松石/海浪绿 */
+            --gradient-2: #3b82f6; /* 科技蓝 */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-  <!-- Custom CSS for Theme and Styling -->
-  <style>
-    :root {
-      /* Seafoam Green Accent Color */
-      --primary-color: #2ab69e; 
-      --primary-hover: #229480;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    .title.is-1 {
-      font-weight: 700;
-    }
-    .publication-title {
-      font-size: 2.5rem;
-    }
-    h2.title {
-      color: #363636;
-      font-weight: 600;
-    }
-    .author-block {
-      display: inline-block;
-      margin-right: 15px;
-      font-size: 1.15rem;
-    }
-    .author-block a {
-      color: var(--primary-color);
-      transition: color 0.2s;
-    }
-    .author-block a:hover {
-      color: var(--primary-hover);
-    }
-    .affiliation-block {
-      font-size: 1rem;
-      color: #7a7a7a;
-      margin-bottom: 5px;
-    }
-    .button.is-dark {
-      background-color: #363636;
-      border-radius: 50px; /* Pill shape */
-      transition: all 0.2s ease-in-out;
-    }
-    .button.is-dark:hover {
-      background-color: var(--primary-color);
-      transform: translateY(-2px);
-    }
-    .hero.is-light {
-      background-color: #f8fbfa; /* Very subtle seafoam tint for the abstract block */
-    }
-    .teaser-img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    }
-    .highlight-text {
-      color: var(--primary-color);
-      font-weight: 600;
-    }
-    .table th {
-      background-color: #f5f5f5;
-    }
-    .citation-box {
-      background-color: #f5f5f5;
-      padding: 20px;
-      border-radius: 8px;
-      text-align: left;
-      overflow-x: auto;
-      font-family: monospace;
-      position: relative;
-    }
-    /* Logo sizing */
-    .affil-logo {
-      height: 40px;
-      margin: 0 10px;
-      vertical-align: middle;
-    }
-  </style>
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* ================= 炫酷背景光晕 ================= */
+        .ambient-light {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
+            z-index: -1;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+        .light-1 { top: -10%; left: -5%; width: 500px; height: 500px; background: var(--gradient-2); }
+        .light-2 { top: 40%; right: -10%; width: 600px; height: 600px; background: var(--gradient-1); animation-delay: -5s; }
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(50px) scale(1.1); }
+        }
+
+        /* ================= 通用布局与玻璃拟物化卡片 ================= */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section { padding: 100px 0; }
+        
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(45, 212, 191, 0.3); /* 绿松石色的微光边框 */
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        /* ================= Hero区域 ================= */
+        .hero { text-align: center; padding: 140px 0 80px; position: relative; z-index: 1;}
+        .hero h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 20px; text-shadow: 0 0 40px rgba(59, 130, 246, 0.3); }
+        .cvpr-badge {
+            display: inline-block;
+            background: rgba(220, 38, 38, 0.1);
+            color: #ef4444;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
+        }
+        .authors { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 15px; }
+        .authors a { color: var(--text-main); font-weight: 500; transition: color 0.2s; }
+        .authors a:hover { color: var(--gradient-1); text-shadow: 0 0 8px var(--gradient-1); }
+        .affiliations { font-size: 1rem; color: #64748b; margin-bottom: 40px; }
+
+        /* 高级动感按钮 */
+        .btn-group { display: flex; center; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .btn {
+            display: flex; align-items: center; gap: 10px;
+            padding: 12px 28px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: all 0.5s ease;
+        }
+        .btn:hover::before { left: 100%; }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--gradient-1);
+            box-shadow: 0 0 20px rgba(45, 212, 191, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* ================= 图片/视频渲染 ================= */
+        .img-fluid { width: 100%; height: auto; border-radius: 16px; display: block; }
+        .teaser-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 60px; align-items: center; }
+        
+        @media(max-width: 768px) {
+            .teaser-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+
+        /* ================= 两栏 Methodology ================= */
+        .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
+        .method-card { background: rgba(255,255,255,0.02); padding: 30px; border-radius: 20px; border: 1px solid var(--glass-border); }
+        .method-card h4 { color: var(--gradient-1); font-size: 1.4rem; margin-bottom: 15px; }
+
+        /* ================= 轮播图定制 ================= */
+        .swiper-container { border-radius: 24px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); border: 1px solid var(--glass-border); }
+        .swiper-slide { background: var(--card-bg); padding: 40px; text-align: center; backdrop-filter: blur(10px); }
+        .swiper-pagination-bullet { background: var(--gradient-1); }
+
+        /* ================= 表格美化 ================= */
+        .table-wrapper { overflow-x: auto; margin-top: 30px; border-radius: 16px; border: 1px solid var(--glass-border); }
+        table { width: 100%; border-collapse: collapse; text-align: center; }
+        th { background: rgba(255,255,255,0.05); padding: 20px; font-weight: 600; color: var(--gradient-1); }
+        td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); }
+        tr:hover td { background: rgba(255,255,255,0.02); color: #fff; }
+        .highlight-row td { background: rgba(45, 212, 191, 0.1); color: #fff; font-weight: bold; }
+
+        /* ================= MacOS风格代码框 ================= */
+        .terminal {
+            background: #0f1422;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .terminal-header {
+            background: #182235; padding: 12px 20px; display: flex; align-items: center; gap: 8px;
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+        .terminal-body { padding: 20px; overflow-x: auto; color: #e2e8f0; font-family: 'Courier New', monospace; font-size: 0.95rem; }
+    </style>
 </head>
 <body>
 
-<!-- SECTION 1: HERO HEADER -->
-<section class="hero is-white" style="padding-top: 3rem;">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          
-          <h1 class="title is-1 publication-title">
-            🦑 Octopus: History-Free Gradient Orthogonalization for Continual Learning in Multimodal Large Language Models
-          </h1>
-          <h3 class="subtitle is-4" style="color: #ed2939; font-weight: 500;">
-            Accepted to CVPR 2024
-          </h3>
-          
-          <div class="is-size-5 publication-authors" style="margin-top: 20px;">
-            <!-- Remember to link individual URLs if applicable -->
-            <span class="author-block"><a href="#">Yuehao Liu</a><sup>1</sup>,</span>
-            <span class="author-block"><a href="#">Shanyan Guan</a><sup>2</sup>,</span>
-            <span class="author-block"><a href="#">Weijia Zhang</a><sup>1</sup>,</span>
-            <span class="author-block"><a href="#">Xuanming Shang</a><sup>1</sup>,</span><br>
-            <span class="author-block"><a href="#">Yanhao Ge</a><sup>2</sup>,</span>
-            <span class="author-block"><a href="#">Wei Li</a><sup>2</sup>,</span>
-            <span class="author-block"><a href="#">Chao Ma</a><sup>1*</sup></span>
-          </div>
+    <!-- 全局背景氛围灯 -->
+    <div class="ambient-light light-1"></div>
+    <div class="ambient-light light-2"></div>
 
-          <div class="is-size-6 publication-authors" style="margin-top: 15px;">
-            <span class="affiliation-block"><sup>1</sup>MoE Key Lab of Artificial Intelligence, AI Institute, Shanghai Jiao Tong University</span><br>
-            <span class="affiliation-block"><sup>2</sup>vivo Mobile Communication Co., Ltd.</span>
-          </div>
-
-          <!-- Links / Action Buttons -->
-          <div class="column has-text-centered" style="margin-top: 15px;">
-            <div class="publication-links">
-              <!-- PDF Link -->
-              <span class="link-block">
-                <a href="#" class="button is-dark custom-btn">
-                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                  <span>Paper</span>
-                </a>
-              </span>
-              <!-- ArXiv Link -->
-              <span class="link-block">
-                <a href="#" class="button is-dark custom-btn">
-                  <span class="icon"><i class="ai ai-arxiv"></i></span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-              <!-- Code Link -->
-              <span class="link-block">
-                <a href="https://github.com/fxmangd/octopus" class="button is-dark custom-btn">
-                  <span class="icon"><i class="fab fa-github"></i></span>
-                  <span>Code / GitHub</span>
-                </a>
-              </span>
+    <!-- ================= HERO ================= -->
+    <section class="hero container">
+        <div data-aos="fade-down" data-aos-duration="1000">
+            <div class="cvpr-badge"><i class="fas fa-award"></i> Accepted to CVPR 2024</div>
+            <h1>
+                🦑 Octopus: <br>
+                <span class="gradient-text">History-Free Gradient Orthogonalization</span><br>
+                for Continual Learning in MLLMs
+            </h1>
+            
+            <div class="authors">
+                <a href="#">Yuehao Liu</a><sup>1</sup>, 
+                <a href="#">Shanyan Guan</a><sup>2</sup>, 
+                <a href="#">Weijia Zhang</a><sup>1</sup>, 
+                <a href="#">Xuanming Shang</a><sup>1</sup>, <br>
+                <a href="#">Yanhao Ge</a><sup>2</sup>, 
+                <a href="#">Wei Li</a><sup>2</sup>, 
+                <a href="#">Chao Ma</a><sup>1*</sup>
             </div>
-          </div>
+            
+            <div class="affiliations">
+                <sup>1</sup> MoE Key Lab of Artificial Intelligence, AI Institute, Shanghai Jiao Tong University<br>
+                <sup>2</sup> vivo Mobile Communication Co., Ltd.
+            </div>
+
+            <div class="btn-group">
+                <a href="#" class="btn"><i class="fas fa-file-pdf"></i> Paper</a>
+                <a href="#" class="btn"><i class="fas fa-code"></i> Code</a>
+                <a href="#" class="btn"><i class="fas fa-book"></i> arXiv</a>
+                <a href="#" class="btn" style="border-color: #f59e0b;"><i class="fas fa-database"></i> UCIT Benchmark</a>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- VISUAL SPOTLIGHT / TEASER -->
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-vcentered">
-      <div class="column is-half has-text-centered">
-        <!-- Placeholder for Fig 1 Radar Chart -->
-        <img src="static/images/fig1_radar.png" alt="Radar chart comparing continual learning performance" class="teaser-img" />
-        <p class="is-size-7 mt-2"><b>State-of-the-Art Performance:</b> Octopus outperforms all competing rehearsal-free and rehearsal-based methods by a substantial margin.</p>
-      </div>
-      <div class="column is-half has-text-centered">
-        <!-- Placeholder for Fig 2 Left (Sequential Concept) -->
-        <img src="static/images/fig2_left.png" alt="Continual learning sequential workflow" class="teaser-img" />
-        <p class="is-size-7 mt-2"><b>The Challenge:</b> Sequentially learning tasks while mitigating catastrophic forgetting.</p>
-      </div>
-    </div>
-  </div>
-</section>
+        <!-- Teaser 视效区域 -->
+        <div class="teaser-grid" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+            <div class="glass-card p-0" style="padding: 20px;">
+                <!-- 替换路径 -->
+                <img src="static/images/fig1_radar.png" alt="SOTA Radar Chart" class="img-fluid" style="filter: drop-shadow(0 0 20px rgba(59,130,246,0.3));">
+                <p class="mt-3" style="color: var(--text-muted); font-size:0.9rem;">Octopus firmly establishes a new <b>SOTA performance</b>, surpassing all baselines.</p>
+            </div>
+            <div class="glass-card p-0" style="padding: 20px;">
+                <!-- 替换路径 -->
+                <img src="static/images/fig2_left.png" alt="Continual Learning Challenge" class="img-fluid">
+                <p class="mt-3" style="color: var(--text-muted); font-size:0.9rem;"><b>Challenge:</b> Learning sequentially without catastrophic forgetting.</p>
+            </div>
+        </div>
+    </section>
 
-<!-- SECTION 2: ABSTRACT & KEY CONTRIBUTIONS -->
-<section class="hero is-light">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Abstract</h2>
-      <div class="content has-text-justified">
-        <p>
-          Continual learning in multimodal large language models (MLLMs) aims to sequentially acquire knowledge while mitigating <b>catastrophic forgetting</b>, yet existing methods face inherent limitations: architecture-based approaches incur additional computational overhead and generalize poorly, rehearsal-based methods rely on storing historical data (raising privacy concerns), and conventional regularization is insufficient to fully prevent parameter interference. 
-        </p>
-        <p>
-          We propose <b>Octopus</b>, a two-stage continual learning framework based on <b>History-Free Gradient Orthogonalization (HiFGO)</b>, which enforces gradient-level orthogonality <b>without historical task data</b>. Our proposed two-stage finetuning strategy decouples task adaptation from regularization, achieving a principled balance between plasticity and stability. Experiments on UCIT show that Octopus establishes state-of-the-art performance, <b>surpassing prior SOTA by 2.14% and 6.82%</b> in terms of <i>Avg</i> and <i>Last</i> performance.
-        </p>
+    <!-- ================= ABSTRACT ================= -->
+    <section class="section container" data-aos="fade-up">
+        <h2 class="gradient-text" style="font-size: 2.5rem; text-align: center; margin-bottom: 40px;">Abstract</h2>
+        <div class="glass-card" style="font-size: 1.15rem;">
+            <p>
+                Continual learning in multimodal large language models (MLLMs) aims to sequentially acquire knowledge while mitigating <strong style="color: #fff">catastrophic forgetting</strong>. Existing methods face inherent limitations: architecture-based approaches incur computational overhead, rehearsal-based methods rely on storing historical data (raising privacy concerns), and conventional regularization is insufficient.
+            </p>
+            <p style="margin-top: 20px;">
+                We propose <strong class="gradient-text">Octopus</strong>, a two-stage continual learning framework based on <strong style="color: #fff">History-Free Gradient Orthogonalization (HiFGO)</strong>, which enforces gradient-level orthogonality <strong>without historical task data</strong>. Experiments on UCIT show that Octopus establishes state-of-the-art performance, <strong style="color: var(--gradient-1)">surpassing prior SOTA by 2.14% and 6.82%</strong> in terms of Avg and Last.
+            </p>
+
+            <h3 style="margin-top: 30px; margin-bottom: 15px; color: var(--gradient-2);">✨ Key Contributions</h3>
+            <ul style="color: var(--text-muted); padding-left: 20px;">
+                <li style="margin-bottom: 10px;"><b>HiFGO:</b> Gradient orthogonalization leveraging only past weights—highly data-efficient & privacy-preserving.</li>
+                <li style="margin-bottom: 10px;"><b>Two-Stage Fine-Tuning:</b> Decouples adaptation from regularization, beautifully balancing plasticity and stability.</li>
+                <li><b>Rehearsal-Free SOTA:</b> Defeats even memory-replay methods without buffering a single past sample.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ================= METHODOLOGY ================= -->
+    <section class="section container" data-aos="fade-up">
+        <h2 class="gradient-text" style="font-size: 2.5rem; text-align: center; margin-bottom: 20px;">The Octopus Architecture</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 50px;">A graceful, two-stage finetuning strategy to prevent parameter interference.</p>
         
-        <h4 class="title is-5 mt-5">Key Contributions:</h4>
-        <ul>
-          <li><b>HiFGO:</b> A novel gradient orthogonalization mechanism that relies solely on past weights, making it incredibly data-efficient and privacy-preserving.</li>
-          <li><b>Two-Stage Fine-Tuning:</b> A paradigm that allows models to explore optimal solutions freely before enforcing constraints, perfectly balancing plasticity (learning new info) and stability (retaining old info).</li>
-          <li><b>Rehearsal-Free SOTA:</b> Achieves unprecedented performance on the UCIT benchmark without needing to actively store and replay data from prior tasks.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 3: METHODOLOGY -->
-<section class="section px-4">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">The Challenge & The Octopus Solution</h2>
-    
-    <div class="columns is-centered mt-4">
-      <div class="column is-10 has-text-centered">
-        <!-- Placeholder for Fig 2 Right (Architecture) -->
-        <img src="static/images/fig2_right.png" alt="Octopus Pipeline Architecture (Stage 1 & Stage 2)" class="teaser-img" />
-      </div>
-    </div>
-
-    <div class="columns is-centered mt-5">
-      <div class="column is-5">
-        <div class="box is-shadowless" style="background-color: #fbfbfb; border: 1px solid #eaeaea;">
-          <h4 class="title is-5 highlight-text">Stage 1: Unconstrained Adaptation</h4>
-          <p class="is-size-6 content">
-            During the first fine-tuning stage, both regularization terms are deactivated. This allows the MLLM to freely adapt and approach a local optimal region for the current task, maximizing learning plasticity.
-          </p>
+        <div class="glass-card" style="text-align: center; padding: 20px;">
+            <!-- 替换路径 -->
+            <img src="static/images/fig2_right.png" class="img-fluid" alt="Octopus Pipeline" style="max-height: 500px; object-fit: contain; margin: 0 auto;">
         </div>
-      </div>
-      <div class="column is-5">
-        <div class="box is-shadowless" style="background-color: #fbfbfb; border: 1px solid #eaeaea;">
-          <h4 class="title is-5 highlight-text">Stage 2: HiFGO Constraints</h4>
-          <p class="is-size-6 content">
-            In the second stage, we apply <b>History-Free Gradient Orthogonalization</b>. By bounding parameter updates orthogonal to the Gradients of Previous parameters Within Current data (GPWC), we prevent interference with old knowledge. <i>Crucially, this uses only past weights—no historical data is needed!</i>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- SECTION 4: QUALITATIVE RESULTS -->
-<section class="section bg-light">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Qualitative Results</h2>
-    <p class="has-text-centered mb-5">Octopus actively preserves visual reasoning rules where competing methods (like OLoRA) fail and forget.</p>
-    
-    <div class="carousel" id="results-carousel">
-      <!-- Slide 1: Image Captioning -->
-      <div class="item">
-        <div class="card box is-shadowless" style="background-color: #f9f9f9;">
-          <div class="card-content has-text-centered">
-            <!-- Placeholder for Fig 10 VizWiz Slide -->
-            <img src="static/images/carousel_slide1.png" alt="VizWiz Image Captioning Comparison" class="teaser-img" style="max-height: 400px;"/>
-            <p class="mt-3"><b>Task: Image Captioning (VizWiz).</b> Notice how the baseline (red) hallucinates details, while Octopus (green) accurately identifies the exact objects presented.</p>
-          </div>
+        <div class="method-grid">
+            <div class="method-card" data-aos="fade-right">
+                <h4><i class="fas fa-unlock-alt"></i> Stage 1: Unconstrained Adaptation</h4>
+                <p style="color: var(--text-muted);">During the first stage, the MLLM learns task-specific knowledge without constraints. This maximizes the model's <b>plasticity</b>, allowing it to fully adapt to the optimal representation for the new visual-linguistic task.</p>
+            </div>
+            <div class="method-card" data-aos="fade-left">
+                <h4><i class="fas fa-shield-alt"></i> Stage 2: HiFGO Constraints</h4>
+                <p style="color: var(--text-muted);">We apply <b>History-Free Gradient Orthogonalization</b>. By forcing parameter updates to be orthogonal to the sensitivity space of the previous model, we guarantee stability. <i>Crucially, this uses 0% historical data!</i></p>
+            </div>
         </div>
-      </div>
-      <!-- Slide 2: Math Reasoning -->
-      <div class="item">
-        <div class="card box is-shadowless" style="background-color: #f9f9f9;">
-          <div class="card-content has-text-centered">
-            <!-- Placeholder for Fig 10 CLEVR-Math Slide -->
-            <img src="static/images/carousel_slide2.png" alt="CLEVR-Math Reasoning Comparison" class="teaser-img" style="max-height: 400px;"/>
-            <p class="mt-3"><b>Task: Math Reasoning (CLEVR-Math).</b> Octopus successfully reproduces correct answers and dynamically avoids math forgetting.</p>
-          </div>
+    </section>
+
+    <!-- ================= QUALITATIVE RESULTS (SWIPER) ================= -->
+    <section class="section container" data-aos="fade-up">
+        <h2 class="gradient-text" style="font-size: 2.5rem; text-align: center; margin-bottom: 50px;">Qualitative Results</h2>
+        
+        <div class="swiper swiper-container">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="swiper-slide">
+                    <h3 style="color: #fff; margin-bottom: 20px;">Task: Image Captioning (VizWiz)</h3>
+                    <img src="static/images/carousel_slide1.png" class="img-fluid" style="max-height: 350px; width:auto; border-radius: 8px; margin:0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                    <p style="margin-top: 25px; color: var(--text-muted);">Notice how the baseline method (red) hallucinates incorrect details due to catastrophic forgetting. <b>Octopus (green)</b> accurately retains visual reasoning rules.</p>
+                </div>
+                <!-- Slide 2 -->
+                <div class="swiper-slide">
+                    <h3 style="color: #fff; margin-bottom: 20px;">Task: Math Reasoning (CLEVR-Math)</h3>
+                    <img src="static/images/carousel_slide2.png" class="img-fluid" style="max-height: 350px; width:auto; border-radius: 8px; margin:0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                    <p style="margin-top: 25px; color: var(--text-muted);">Even after long sequence learning, Octopus reproduces exact answers autonomously.</p>
+                </div>
+            </div>
+            <!-- 自定义箭头和圆点 -->
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next" style="color: var(--gradient-1);"></div>
+            <div class="swiper-button-prev" style="color: var(--gradient-1);"></div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- SECTION 5: QUANTITATIVE RESULTS -->
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered mb-5">Quantitative Results</h2>
-    
-    <div class="columns is-vcentered mt-4">
-      <!-- Simplified Table -->
-      <div class="column is-half">
-        <h4 class="title is-5 has-text-centered">Evaluation on UCIT Benchmark</h4>
-        <div class="table-container">
-          <table class="table is-fullwidth is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Replay?</th>
-                <th class="has-text-centered">Avg Acc</th>
-                <th class="has-text-centered">Last Acc</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td colspan="4" class="has-text-grey" style="font-size: 0.85rem"><i>Selection of Baselines</i></td></tr>
-              <tr>
-                <td>O-LoRA</td>
-                <td class="has-text-centered">❌</td>
-                <td class="has-text-centered">64.54</td>
-                <td class="has-text-centered">58.36</td>
-              </tr>
-              <tr>
-                <td>HiDe-LLaVA</td>
-                <td class="has-text-centered">❌</td>
-                <td class="has-text-centered">68.94</td>
-                <td class="has-text-centered">64.19</td>
-              </tr>
-              <tr>
-                <td>Vanilla Rehearsal</td>
-                <td class="has-text-centered">✅</td>
-                <td class="has-text-centered">69.90</td>
-                <td class="has-text-centered">68.44</td>
-              </tr>
-              <tr style="background-color: #e9f7f4; font-weight: bold;">
-                <td>Octopus (Ours)</td>
-                <td class="has-text-centered">❌</td>
-                <td class="has-text-centered" style="color:var(--primary-color)">71.08</td>
-                <td class="has-text-centered" style="color:var(--primary-color)">71.01</td>
-              </tr>
-            </tbody>
-          </table>
+    <!-- ================= QUANTITATIVE RESULTS ================= -->
+    <section class="section container" data-aos="fade-up">
+        <h2 class="gradient-text" style="font-size: 2.5rem; text-align: center; margin-bottom: 50px;">Quantitative Performance</h2>
+        
+        <div class="method-grid" style="align-items: start;">
+            <!-- 表格 -->
+            <div class="glass-card" style="padding: 30px;">
+                <h3 style="color: #fff; text-align: center; margin-bottom: 20px;">UCIT Benchmark</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Replay Data?</th>
+                                <th>Avg Acc</th>
+                                <th>Last Acc</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>O-LoRA</td><td>❌</td><td>64.54</td><td>58.36</td></tr>
+                            <tr><td>HiDe-LLaVA</td><td>❌</td><td>68.94</td><td>64.19</td></tr>
+                            <tr><td>Vanilla Rehearsal</td><td>✅</td><td>69.90</td><td>68.44</td></tr>
+                            <tr class="highlight-row">
+                                <td>Octopus (Ours)</td>
+                                <td>❌</td>
+                                <td>71.08</td>
+                                <td>71.01</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- 折线图 -->
+            <div class="glass-card" style="padding: 30px; text-align: center;">
+                <h3 style="color: #fff; margin-bottom: 20px;">Averaged Cumulative Performance</h3>
+                <img src="static/images/fig5a.png" class="img-fluid" style="background:#fff; padding:10px;">
+                <p style="margin-top: 15px; font-size:0.9rem; color:var(--text-muted);">Consistently resistant to forgetting across increasing task numbers (Figure 5a).</p>
+            </div>
         </div>
-        <p class="has-text-centered is-size-7"><a href="#">See the paper for the full benchmark table.</a></p>
-      </div>
+    </section>
 
-      <!-- Forgetting Curve -->
-      <div class="column is-half has-text-centered">
-        <h4 class="title is-5 mb-4">Averaged Cumulative Performance</h4>
-        <!-- Placeholder for Fig 5a -->
-        <img src="static/images/fig5a.png" alt="Accumulative performance across numbers of tasks" class="teaser-img" />
-        <p class="is-size-7 mt-2">Octopus retains stable, order-invariant performance even as the sequence of tasks grows.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 6: CITATION & CONTACT -->
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <div class="columns">
-      <div class="column is-8">
-        <h2 class="title is-3">Citation</h2>
-        <div class="citation-box">
-          <pre><code>@inproceedings{liu2024octopus,
+    <!-- ================= CITATION ================= -->
+    <section class="section container" data-aos="fade-up" style="padding-bottom: 120px;">
+        <h2 class="gradient-text" style="font-size: 2.5rem; text-align: center; margin-bottom: 30px;">Citation</h2>
+        
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+                <span style="color: #64748b; font-size: 0.85rem; margin-left: 10px;">bibtex</span>
+            </div>
+            <div class="terminal-body" id="bibtex-content">@inproceedings{liu2024octopus,
     title     = {Octopus: History-Free Gradient Orthogonalization for Continual Learning in Multimodal Large Language Models},
     author    = {Liu, Yuehao and Guan, Shanyan and Zhang, Weijia and Shang, Xuanming and Ge, Yanhao and Li, Wei and Ma, Chao},
     booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
     year      = {2024}
-}</code></pre>
+}</div>
         </div>
-      </div>
-      <div class="column is-4">
-        <h2 class="title is-3">Contact</h2>
-        <p class="content">
-          For any questions or collaborations, feel free to reach out to the authors:
-        </p>
-        <ul class="content">
-          <li><strong>Yuehao Liu:</strong> <a href="mailto:yuehao.liu@sjtu.edu.cn">yuehao.liu@sjtu.edu.cn</a></li>
-          <li><strong>Chao Ma:</strong> <a href="mailto:chaoma@sjtu.edu.cn">chaoma@sjtu.edu.cn</a></li>
-        </ul>
-        <br>
-        <p class="is-size-7 has-text-grey">
-          This project homepage is based on the <a href="https://github.com/nerfies/nerfies.github.io" target="_blank">Nerfies</a> template.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+        <div style="text-align: center; margin-top: 15px;">
+            <button class="btn" style="margin: 0 auto; padding: 8px 20px; font-size: 0.9rem;" onclick="copyBib()">
+                <i class="far fa-copy"></i> Copy to Clipboard
+            </button>
+        </div>
+    </section>
 
-<!-- Carousel Script -->
-<script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/js/bulma-carousel.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    bulmaCarousel.attach('#results-carousel', {
-      slidesToScroll: 1,
-      slidesToShow: 1,
-      loop: true,
-      infinite: true,
-      autoplay: true,
-      autoplaySpeed: 5000,
-      navigation: true,
-      pagination: true
-    });
-  });
-</script>
+    <!-- ================= SCRIPTS ================= -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // 初始化 AOS 滚动动画
+        AOS.init({
+            once: true,
+            offset: 100,
+        });
 
+        // 初始化高级轮播图
+        const swiper = new Swiper('.swiper-container', {
+            effect: 'fade', // 或者 'slide'，fade自带高级感
+            fadeEffect: { crossFade: true },
+            loop: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+        // 复制 BibTex 动效
+        function copyBib() {
+            const content = document.getElementById("bibtex-content").innerText;
+            navigator.clipboard.writeText(content).then(() => {
+                const btn = document.querySelector('button[onclick="copyBib()"]');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                btn.style.borderColor = "#2dd4bf";
+                btn.style.color = "#2dd4bf";
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.borderColor = "";
+                    btn.style.color = "";
+                }, 2000);
+            });
+        }
+    </script>
 </body>
 </html>
