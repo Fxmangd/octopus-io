@@ -240,19 +240,19 @@
             <div class="cvpr-badge"><i class="fas fa-award"></i> Accepted to CVPR 2026</div>
             
             <h1>
-                <img src="static/images/octopus_logo.png" alt="Octopus Logo" class="title-icon">
+                <img src="static/images/icon.png" alt="Octopus Logo" class="title-icon">
                 Octopus: <span class="highlight-text">History-Free Gradient Orthogonalization</span><br>
                 for Continual Learning in MLLMs
             </h1>
             
             <div class="authors">
-                <a href="#">Yuehao Liu</a><sup>1</sup>, 
-                <a href="#">Shanyan Guan</a><sup>2</sup>, 
-                <a href="#">Weijia Zhang</a><sup>1</sup>, 
-                <a href="#">Xuanming Shang</a><sup>1</sup>, <br>
-                <a href="#">Yanhao Ge</a><sup>2</sup>, 
-                <a href="#">Wei Li</a><sup>2</sup>, 
-                <a href="#">Chao Ma</a><sup>1*</sup>
+                <a href="https://openreview.net/profile?id=~Yuehao_Liu1">Yuehao Liu</a><sup>1</sup>, 
+                <a href="https://syguan96.github.io/">Shanyan Guan</a><sup>2</sup>, 
+                <a href="https://openreview.net/profile?id=~Weijia_Zhang7">Weijia Zhang</a><sup>1</sup>, 
+                <a href="https://openreview.net/profile?id=~Xuanming_Shang1">Xuanming Shang</a><sup>1</sup>, <br>
+                <a href="https://scholar.google.com/citations?user=h6tuBAcAAAAJ&hl=zh-CN&oi=ao">Yanhao Ge</a><sup>2</sup>, 
+                <a href="https://fxmangd.github.io/octopus-io/">Wei Li</a><sup>2</sup>, 
+                <a href="https://vision.sjtu.edu.cn/">Chao Ma</a><sup>1*</sup>
             </div>
             
             <div class="affiliations">
@@ -285,17 +285,19 @@
                 <!-- 左列：正式的学术摘要 -->
                 <div class="glass-card" style="font-size: 1.05rem;">
                     <p style="text-align: justify; margin-bottom: 15px;">
-                        Continual learning in Multimodal Large Language Models (MLLMs) aims to sequentially acquire knowledge for new vision-language tasks while preventing <strong class="highlight-text">catastrophic forgetting</strong>. Traditional methods face a critical dilemma: architecture-based approaches endlessly increase parameters resulting in computational overhead, while rehearsal-based methods rely heavily on historical data, which raises privacy concerns and storage expenses. 
-                    </p>
-                    <p style="text-align: justify;">
-                        To address these limitations, we propose <strong>Octopus</strong>, a novel continual learning framework based on <span class="highlight-text">History-Free Gradient Orthogonalization (HiFGO)</span>. By mathematically leveraging <em>Gradients of Previous parameters Within Current data (GPWC)</em> as an accurate proxy, Octopus efficiently identifies and protects sensitive optimization manifolds of older tasks without requiring any historical data. Combined with a customized two-stage finetuning strategy, Octopus elegantly balances plasticity and stability. Extensive experiments on the UCIT benchmark demonstrate that Octopus achieves state-of-the-art performance, surpassing even rehearsal-based baselines.
+                        Continual learning in multimodal large language models (MLLMs) aims to sequentially acquire knowledge while mitigating <strong class="highlight-text">catastrophic forgetting</strong>, yet existing methods face inherent limitations: architecture-based approaches incur additional computational overhead and often generalize poorly to new tasks, rehearsal-based methods rely on storing historical data, raising privacy and storage concerns, and conventional regularization-based strategies alone are insufficient to fully prevent parameter interference. We propose <strong>Octopus</strong>, a two-stage continual learning framework based on <strong class="highlight-text">History-Free Gradient Orthogonalization (HiFGO)</strong>, which enforces gradient-level orthogonality without historical task data. Our proposed two-stage finetuning strategy decouples task adaptation from regularization, achieving a principled balance between plasticity and stability. Experiments on UCIT show that <strong>Octopus</strong> establishes state-of-the-art performance, surpassing prior SOTA by 2.14% and 6.82% in terms of <em>Avg</em> and <em>Last</em>.
+                        
+                        <!-- Continual learning in Multimodal Large Language Models (MLLMs) aims to sequentially acquire knowledge for new vision-language tasks while preventing <strong class="highlight-text">catastrophic forgetting</strong>. Traditional methods face a critical dilemma: architecture-based approaches endlessly increase parameters resulting in computational overhead, while rehearsal-based methods rely heavily on historical data, which raises privacy concerns and storage expenses.  -->
+                    <!-- </p> -->
+                    <!-- <p style="text-align: justify;"> -->
+                        <!-- To address these limitations, we propose <strong>Octopus</strong>, a novel continual learning framework based on <span class="highlight-text">History-Free Gradient Orthogonalization (HiFGO)</span>. By mathematically leveraging <em>Gradients of Previous parameters Within Current data (GPWC)</em> as an accurate proxy, Octopus efficiently identifies and protects sensitive optimization manifolds of older tasks without requiring any historical data. Combined with a customized two-stage finetuning strategy, Octopus elegantly balances plasticity and stability. Extensive experiments on the UCIT benchmark demonstrate that Octopus achieves state-of-the-art performance, surpassing even rehearsal-based baselines. -->
                     </p>
                 </div>
                 <!-- 右列：雷达图 -->
                 <div>
                     <figure style="margin: 0;">
-                        <img src="static/images/fig1_radar.png" alt="Performance Radar Chart on UCIT" class="img-fluid" style="background:#fff;">
-                        <p class="caption">Figure 1. Performance comparison on the UCIT dataset. Octopus establishes a new State-of-the-Art (SOTA) without needing historical data replay.</p>
+                        <img src="static/images/fig1.png" alt="Performance Radar Chart on UCIT" class="img-fluid" style="background:#fff;">
+                        <p class="caption">Figure 1. Performance comparison between <strong>Octopus</strong> (ours) and existing approaches on UCIT in terms of <em>Last</em>. Results demonstrate that Octopus establishes a new SOTA performance and outperforms all competing methods by a substantial margin.</p>
                     </figure>
                 </div>
             </div>
@@ -310,8 +312,8 @@
             <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 1.1rem;">
                 The Octopus pipeline is thoughtfully designed to mitigate gradient-level interference across arbitrary task sequences, achieving parameter decoupling purely through optimization geometry.
             </p>
-            <img src="static/images/fig2_right.png" class="img-fluid" alt="Octopus Pipeline Diagram">
-            <p class="caption mt-3">Figure 2. The pipeline of the proposed Octopus framework.</p>
+            <img src="static/images/fig2.png" class="img-fluid" alt="Octopus Pipeline Diagram">
+            <p class="caption mt-3">Figure 2. Overall pipeline for continual learning in MLLMs (<em>left</em>) and architecture of our proposed <strong>Octopus</strong> (<em>right</em>). In the context of continual learning, MLLMs are required to sequentially learn multiple tasks while overcoming the challenge of catastrophic forgetting caused by non-stationary data distributions. To address this, we propose Octopus, which adopts a two-stage fine-tuning paradigm. In the first stage, MLLM learns task-specific knowledge without constraints, enabling full adaptation to current task. In the second stage, we apply History-Free Gradient Orthogonalization (HiFGO) to mitigate parameter interference, while simultaneously constraining the parameter updates within an optimal solution space, thereby maintaining a effective balanced trade-off between plasticity and stability.</p>
         </div>
     </section>
 
