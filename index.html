@@ -336,7 +336,7 @@
                         <p class="caption">Figure 3. Validity of the HiFGO constraint. Utilizing GPWC successfully restores prior task performance compared to standard sequential fine-tuning.</p>
                     </div>
                     <div>
-                        <img src="static/images/fig4.png" class="img-fluid" alt="Hessian Quadratic Form">
+                        <img src="static/images/fig7.png" class="img-fluid" alt="Hessian Quadratic Form">
                         <p class="caption">Figure 4. Comparison of the quadratic form of parameter increment. GPWC guides model updates precisely into low-curvature flat regions of the old tasks.</p>
                     </div>
                 </div>
@@ -366,7 +366,7 @@
             </div>
             <!-- 右侧：伪代码 -->
             <div>
-                <img src="static/images/fig5_algorithm.png" class="img-fluid" alt="Octopus Algorithm Pseudo-code" style="box-shadow: var(--shadow-soft);">
+                <img src="static/images/algo1.png" class="img-fluid" alt="Octopus Algorithm Pseudo-code" style="box-shadow: var(--shadow-soft);">
                 <p class="caption">Algorithm 1. The formalized execution flow of Two-Stage Finetuning.</p>
             </div>
         </div>
@@ -381,18 +381,19 @@
             <div class="glass-card" style="margin-bottom: 40px;">
                 <h3 style="margin-top: 0;">Comprehensive Performance Comparison</h3>
                 <p style="color: var(--text-muted); font-size: 0.95rem;">
-                    Evaluations on the demanding multi-task UCIT benchmark. Octopus significantly outperforms recent baselines (such as O-LoRA and HiDe-LLaVA) on Average (Avg) and Last performance metrics, achieving SOTA results without requiring the storage or rehearsal of past data.
+                    Comparison with various methods on UCIT in terms of <em>Avg</em> and <em>Last</em>. The best and second methods are labeled with <strong>bold</strong> and <u>underline</u> styles. <em>Zero-shot</em> evaluates pretrained model without finetuning. <em>Multi-task</em> jointly finetunes model across all datasets, whereas <em>Sequential Finetune</em> adapts only one LoRA module sequentially to all tasks. These settings provide an empirical characterization of the lower bound, upper bound, and baseline for continual learning methods.
                 </p>
-                <img src="static/images/fig6_table.png" class="img-fluid mt-3" alt="Main Benchmark Table">
+                <img src="static/images/tab1.png" class="img-fluid mt-3" alt="Main Benchmark Table">
             </div>
 
             <!-- 整行占据 2：BWT 分析 -->
             <div class="glass-card" style="margin-bottom: 40px;">
                 <h3 style="margin-top: 0;">Backward Transfer (BWT) Analysis</h3>
                 <p style="color: var(--text-muted); font-size: 0.95rem;">
+                    Effectiveness of History-Free Gradient Orthogonalization. We compare the performance of three orthogonalization strategies (orthogonal to param., <strong>GPWC</strong> or both) and that of two type of gradients (<strong>GPWC</strong> and gradients of prev. param. on prev. task). Our method is emphasized in bold for clarity.
                     A critical indicator of continual learning capability is Backward Transfer. Instead of suffering from negative transfer, Octopus effectively extracts generalized representations from new tasks that are highly compatible with historical knowledge, yielding an exceptional positive backward transfer (BWT = +0.41).
                 </p>
-                <img src="static/images/fig8_bwt.png" class="img-fluid mt-3" alt="Backward Transfer Chart" style="max-height: 400px; object-fit: contain; margin: 0 auto;">
+                <img src="static/images/tab2.png" class="img-fluid mt-3" alt="Backward Transfer Chart" style="max-height: 400px; object-fit: contain; margin: 0 auto;">
             </div>
 
             <!-- 分两列占据 3：鲁棒性 vs 效率 -->
@@ -400,17 +401,17 @@
                 <div class="glass-card">
                     <h3 style="margin-top: 0; font-size: 1.25rem;">Robustness and Hyperparameter Sensitivity</h3>
                     <p style="font-size: 0.9rem; color: var(--text-muted);">
-                        Extensive sensitivity analyses confirm that Octopus maintains consistently optimal performance across a broad spectrum of parameter settings and randomized non-stationary task orders.
+                        Sensitivity analyses confirm that Octopus maintains consistently optimal performance across randomized non-stationary task orders.
                     </p>
-                    <img src="static/images/fig9_sensitivity.png" class="img-fluid mt-3" alt="Hyperparameter Sensitivity">
+                    <img src="static/images/tab5.png" class="img-fluid mt-3" alt="Hyperparameter Sensitivity">
                 </div>
 
                 <div class="glass-card">
                     <h3 style="margin-top: 0; font-size: 1.25rem;">Inference Efficiency</h3>
                     <p style="font-size: 0.9rem; color: var(--text-muted);">
-                        Compared to MoE-based strategies that require loading numerous redundant parameter experts as task sequences grow, Octopus utilizes a unified structure, introducing zero additional computational footprint during the inference phase.
+                        Compared to MoE-based strategies, Octopus utilizes a unified structure, introducing zero additional computational footprint during the inference phase.
                     </p>
-                    <img src="static/images/fig12_params.png" class="img-fluid mt-3" alt="Inference Parameters Comparison">
+                    <img src="static/images/fig11.png" class="img-fluid mt-3" alt="Inference Parameters Comparison">
                 </div>
             </div>
         </div>
